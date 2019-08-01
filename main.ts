@@ -5,9 +5,9 @@ import * as path from 'path';
 import * as bodyParser from 'body-parser';
 const app = express();
 
-app.use(bodyParser.json());
+app.use(bodyParser.json({strict: true}));
 app.use(bodyParser.urlencoded());
-app.use(bodyParser.raw());
+// app.use(bodyParser.raw());
 const router = express.Router();
 
 scannerDecoration(path.resolve(__dirname, 'server'), [/\.js$/, /\.js\.map$/, /\.\d.ts$/]);
@@ -19,6 +19,7 @@ import * as http from 'http';
 import * as net from 'net';
 async function main() {
     await startServer({
+        port: 8080
         // registry: "http://localhost:5000/api/v1/app"
     });
 }
@@ -39,7 +40,7 @@ async function startServer(options?: IServerConfig) {
         let addr = (server.address() as net.AddressInfo);
         console.log(`SERVER STARTED LISTENING ON ${addr.address}:${addr.port}...`);
         if (options!.registry) {
-            let url = 'http://127.0.0.1:'+addr.port+'/api/v1/app';
+            let url = 'http://127.0.0.1:8080/api/v1/app';
             registryClient.init({
                 url: url,
             });
