@@ -1,0 +1,23 @@
+{
+  "name": "cloud-registry",
+  "version": "0.0.1",
+  "description": "node cloud registry ",
+  "main": "dist/server/index.js",
+  "scripts": {
+    "test": "mocha"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@github.com/wanglihui/cloud.git"
+  },
+  "keywords": [
+    "node",
+    "cloud",
+    "regidstry"
+  ],
+  "author": "wanglihui.sjz@gmail.com",
+  "license": "ISC",
+  "dependencies": {
+    "cloud-registry-client": "0.0.6"
+  }
+}
