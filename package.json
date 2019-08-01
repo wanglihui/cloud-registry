@@ -1,8 +1,19 @@
 {
   "name": "cloud-registry",
   "version": "0.0.1",
-  "description": "node cloud registry ",
-  "main": "dist/server/index.js",
+  "description": "cloud micservice registry",
+  "main": "dist/main.js",
+  "dependencies": {
+    "body-parser": "^1.19.0",
+    "cloud-registry-client": "0.0.6",
+    "express": "^4.17.1",
+    "ts-express-restful": "^6.0.1",
+    "ts-node": "^8.3.0"
+  },
+  "devDependencies": {
+    "@types/express": "^4.17.0",
+    "typescript": "^3.5.3"
+  },
   "scripts": {
     "test": "mocha"
   },
@@ -11,13 +22,10 @@
     "url": "git@github.com/wanglihui/cloud.git"
   },
   "keywords": [
-    "node",
     "cloud",
-    "regidstry"
+    "project",
+    "template"
   ],
   "author": "wanglihui.sjz@gmail.com",
-  "license": "ISC",
-  "dependencies": {
-    "cloud-registry-client": "0.0.6"
-  }
+  "license": "ISC"
 }
