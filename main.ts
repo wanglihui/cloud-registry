@@ -1,3 +1,4 @@
+import C from 'cloud-conf';
 import express  = require('express');
 import registryClient, {RegistryClient} from 'cloud-registry-client';
 import {scannerDecoration, registerControllerToRouter} from 'ts-express-restful';
@@ -10,17 +11,17 @@ app.use(bodyParser.urlencoded());
 // app.use(bodyParser.raw());
 const router = express.Router();
 
-scannerDecoration(path.resolve(__dirname, 'server'), [/\.js$/, /\.js\.map$/, /\.\d.ts$/]);
-registerControllerToRouter(router, {isShowUrls: true});
+scannerDecoration(path.resolve(__dirname, 'server'), [/\.js$/, /\.js\.map$/, /\.d.ts$/]);
+registerControllerToRouter(router);
 
 app.use('/api/v1', router);
 
 import * as http from 'http';
 import * as net from 'net';
 async function main() {
+    await C.ready();
     await startServer({
-        port: 8080
-        // registry: "http://localhost:5000/api/v1/app"
+        registry: C.registry && C.registry.url
     });
 }
 
@@ -69,4 +70,13 @@ main()
 .catch( (err) => {
     console.error('系统启动失败：', err);
     process.exit(-1);
+})
+
+const death = require('death');
+death(async () => {
+    try {
+        await registryClient.unRegistry();
+    } finally {
+        process.exit(-1);
+    }
 })
