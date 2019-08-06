@@ -32,7 +32,7 @@ interface IServerConfig {
 
 async function startServer(options?: IServerConfig) {
     let defaultOptions = {
-        port: 0,
+        port: C.port,
         registry: true,
     }
     options = Object.assign(defaultOptions, options) as IServerConfig;
@@ -41,7 +41,7 @@ async function startServer(options?: IServerConfig) {
         let addr = (server.address() as net.AddressInfo);
         console.log(`SERVER STARTED LISTENING ON ${addr.address}:${addr.port}...`);
         if (options!.registry) {
-            let url = 'http://127.0.0.1:8080/api/v1/app';
+            let url = C.registry.url;
             registryClient.init({
                 url: url,
             });
