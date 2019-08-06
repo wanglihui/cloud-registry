@@ -1,8 +1,4 @@
-<<<<<<< HEAD
-node_modules
-dist
-=======
 .vscode
 dist
 node_modules
->>>>>>> aab16aa92b3f70961d3c297fe5c18cc60afbbaf8
+config.local.*

@@ -5,8 +5,8 @@ import {scannerDecoration, registerControllerToRouter} from 'ts-express-restful'
 import * as path from 'path';
 import * as bodyParser from 'body-parser';
 const app = express();
-
-app.use(bodyParser.json({strict: true}));
+import {CloudError} from 'cloud-error';
+app.use(bodyParser.json());
 app.use(bodyParser.urlencoded());
 // app.use(bodyParser.raw());
 const router = express.Router();
@@ -15,6 +15,14 @@ scannerDecoration(path.resolve(__dirname, 'server'), [/\.js$/, /\.js\.map$/, /\.
 registerControllerToRouter(router);
 
 app.use('/api/v1', router);
+
+app.use(function(err: Error, _: any, res: any, next: any) {
+    if (err instanceof CloudError) {
+        res.status(err.http_status);
+        return res.json(err);
+    }
+    return next(err);
+});
 
 import * as http from 'http';
 import * as net from 'net';

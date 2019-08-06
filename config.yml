@@ -1,8 +1,7 @@
 name: cloud-registry
 env: public
 port: 8080
-registry:
-  url: http://localhost:8080/api/v1/app
+registry: false
 registryServer:
   type: "memory"
   conf: ''
