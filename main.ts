@@ -11,7 +11,7 @@ app.use(bodyParser.urlencoded());
 // app.use(bodyParser.raw());
 const router = express.Router();
 
-scannerDecoration(path.resolve(__dirname, 'server'), [/\.js$/, /\.js\.map$/, /\.d.ts$/]);
+scannerDecoration(path.resolve(__dirname, 'server'), [/\.js\.map$/, /\.d.ts$/]);
 registerControllerToRouter(router);
 
 app.use('/api/v1', router);
@@ -41,7 +41,7 @@ interface IServerConfig {
 async function startServer(options?: IServerConfig) {
     let defaultOptions = {
         port: C.port,
-        registry: true,
+        registry: C.registry && C.registry.url,
     }
     options = Object.assign(defaultOptions, options) as IServerConfig;
     const server = http.createServer(app);
