@@ -1,40 +1,34 @@
 import { AbstractController, RequestParam, RequestBody, Restful } from "ts-express-restful";
 import {IRegistryOption} from 'cloud-registry-client';
+import RegistryFactory from "../service/registry-factory";
+import C from 'cloud-conf';
 
 @Restful("/app")
 export default class App extends AbstractController {
-    private services: {[index: string]: IRegistryOption} = {};
+    private registry(){
+        return RegistryFactory.getRegistry(C.registryServer.type, C.registryServer.conf);
+    }
     $isValidId(id: string) {
         return true;
     }
 
     async get(@RequestParam id: string) {
-        return this.services[id];
+        return this.registry().getServioce(id);
     }
 
     async add(@RequestBody app: IRegistryOption) {
-        this.services[app!.id as string] = app;
-        return this.services[app!.id as string];
+        return this.registry().registryService(app);
     }
 
     async delete(@RequestParam id: string) {
-        delete this.services[id];
-        return this.services;
+        return this.registry().unRegistry(id);
     }
 
     async find() {
-        let services = [];
-        for(let key in this.services) {
-            services.push(this.services[key]);
-        }
-        return services;
+        return this.registry().fetchServices();
     }
 
     async update(@RequestParam id: string) {
-        let app = this.services[id];
-        if (app) {
-            app.refreshAt = Date.now();
-        }
-        return app;
+        return this.registry().refresh(id);
     }
 }
